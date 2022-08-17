@@ -7,6 +7,7 @@ terraform {
   }
 }
 
+
 variable "reponame" {}
 variable "container_port" {}
 
@@ -14,7 +15,7 @@ provider "docker" {}
 
 resource "docker_image" "nginx" {
   name         = "nginx:latest"
-  keep_locally = true
+  keep_locally = false
 }
 
 resource "docker_container" "nginx" {
@@ -25,5 +26,6 @@ resource "docker_container" "nginx" {
     external = var.container_port 
   }
 }
+
 
 // en terraformm para declarar variables se usa la palabra "variable" sin embargo para utilizarlas se utiliza el prefijo "var.(nombre de la variable)".
