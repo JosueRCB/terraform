@@ -4,16 +4,12 @@ terraform {
       source  = "kreuzwerker/docker"
       version = ">= 2.13.0"
     }
-    aws = {
-      source  = "hashicorp/aws"
-      version = "~> 4.16"
-    }
   }
 }
+ variable "reponame" {}
+ variable "container_port" {}
 
-provider "docker" {
-  host    = "npipe:////.//pipe//docker_engine"
-}
+provider "docker" {}
 
 resource "docker_image" "juan" {
   name         = "nginx:latest"
@@ -22,9 +18,10 @@ resource "docker_image" "juan" {
 
 resource "docker_container" "nginx" {
   image = docker_image.nginx.latest
-  name  = "tutorial"
+  name  = var.reponame
   ports {
     internal = 80
-    external = 8000
+    external = var.container_port
   }
 }
+// en terraformm para declarar variables se usa la palabra "variable" sin embargo para utilizarlas se utiliza el prefijo "var.(nombre de la variable)".
